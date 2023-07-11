@@ -158,4 +158,5 @@ def trigger_build_validation_travis(pr_number):
         print(*validated_file_list, sep="\n")
 
 if __name__=="__main__":
-    trigger_build_validation_travis(sys.argv[1])
+    #trigger_build_validation_travis(sys.argv[1])
+    trigger_script_validation_checks()
