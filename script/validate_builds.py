@@ -159,4 +159,4 @@ def trigger_build_validation_travis(pr_number):
 
 if __name__=="__main__":
     #trigger_build_validation_travis(sys.argv[1])
-    trigger_script_validation_checks()
+    trigger_script_validation_checks(sys.argv[1])
