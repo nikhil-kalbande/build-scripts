@@ -1,18 +1,45 @@
----
 arch: ppc64le
-dist: focal
-os: linux
-language: shell
+group: power-focal
 
 services:
     - docker
 
 before_install:
-    - docker pull registry.access.redhat.com/ubi8/ubi:8.7
+    - sudo apt update; sudo apt install -y jq; jq --version
+    # Currently pointing to test branch code of build-script repo
+    #- git clone https://github.com/nikhil-kalbande/build-scripts.git
+    #- cd build-scripts; git checkout jen-travis-mig
 
-script:
-    - sudo apt update -y && sudo apt-get install file -y
-    - pip3 install requests
-    - pip3 install docker
-    - python3 script/validate_builds.py $TRAVIS_PULL_REQUEST &
-    - SCRIPT_PID=$!;while ps -p $SCRIPT_PID > /dev/null;do echo "$SCRIPT_PID is running"; sleep 300; done; wait $SCRIPT_PID; my_pid_status=$?; travis_terminate $my_pid_status
+env:
+  global:
+    - PACKAGE_NAME="dex"
+    - VERSION="v2.35.3"
+    - LANGUAGE="Nodejs"
+
+jobs:
+  include:
+    - stage: Builds
+      name: Build script run
+      script: 
+        - chmod +x script/read_buildinfo.sh;bash script/read_buildinfo.sh
+        - source variable.sh
+        - if [ ${VALIDATE_BUILD_SCRIPT} == true ]; then chmod +x script/build_package.sh; bash -x script/build_package.sh; fi    
+
+    - #stage: Build docker image
+      name: Docker build
+      script: 
+        - chmod +x script/read_buildinfo.sh;bash script/read_buildinfo.sh
+        - source variable.sh
+        - echo "BUILD_DOCKER - $BUILD_DOCKER"
+        - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/build_docker.sh; bash -x script/build_docker.sh; fi
+
+    - stage: Run Scanner
+      name: Run trivy scan
+      script:
+        - echo "This is trivy scan"
+    - name: Run syft scan
+      script:
+        - echo "This is syft scan"
+    - name: Run clair scan
+      script: 
+        - echo "This is clair scan"
