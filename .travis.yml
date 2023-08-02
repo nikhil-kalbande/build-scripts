@@ -19,7 +19,7 @@ env:
 jobs:
   include:
     - stage: Build info
-    - name: Get Build info details
+      name: Get Build info details
       script:
         - chmod +x script/read_buildinfo.sh;bash script/read_buildinfo.sh
       workspaces:
