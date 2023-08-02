@@ -28,22 +28,22 @@ jobs:
           paths:
             - .
 
-    - stage: Builds
-      name: Build script run
-      workspaces:
-        use: build_cache
-      script: 
-        - source variable.sh
-        - if [ ${VALIDATE_BUILD_SCRIPT} == true ]; then chmod +x script/build_package.sh; bash -x script/build_package.sh; fi    
+    # - stage: Builds
+      # name: Build script run
+      # workspaces:
+        # use: build_cache
+      # script: 
+        # - source variable.sh
+        # - if [ ${VALIDATE_BUILD_SCRIPT} == true ]; then chmod +x script/build_package.sh; bash -x script/build_package.sh; fi    
 
-    - #stage: Build docker image
-      name: Docker build
-      workspaces:
-        use: build_cache
-      script: 
-        - source variable.sh
-        - echo "BUILD_DOCKER - $BUILD_DOCKER"
-        - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/build_docker.sh; bash -x script/build_docker.sh; fi
+    # - #stage: Build docker image
+      # name: Docker build
+      # workspaces:
+        # use: build_cache
+      # script: 
+        # - source variable.sh
+        # - echo "BUILD_DOCKER - $BUILD_DOCKER"
+        # - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/build_docker.sh; bash -x script/build_docker.sh; fi
 
     - stage: Run Scanner
       name: Trivy scan

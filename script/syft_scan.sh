@@ -8,7 +8,7 @@ if [ ${BUILD_DOCKER} == true ]; then
     chmod +x syft
     sudo mv syft /usr/bin
 
-    sudo syft -q -s AllLayers -o cyclonedx-json ${imageName} > syft_sbom_results.json
+    sudo syft -q -s AllLayers -o cyclonedx-json ${IMAGE_NAME} > syft_sbom_results.json
     cat syft_sbom_results.json
     #curl -s -k -u ${env.dockerHubUser}:${env.dockerHubPassword} --upload-file syft_sbom_results.json ${url_prefix}/Syft_sbom_results.json
 fi
