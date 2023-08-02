@@ -18,28 +18,47 @@ env:
 
 jobs:
   include:
+    - stage: Build info
+    - name: Get Build info details
+      script:
+        - chmod +x script/read_buildinfo.sh;bash script/read_buildinfo.sh
+      workspaces:
+        create:
+          name: build_cache
+          paths:
+            - .
+
     - stage: Builds
       name: Build script run
+      workspaces:
+        use: build_cache
       script: 
-        - chmod +x script/read_buildinfo.sh;bash script/read_buildinfo.sh
         - source variable.sh
         - if [ ${VALIDATE_BUILD_SCRIPT} == true ]; then chmod +x script/build_package.sh; bash -x script/build_package.sh; fi    
 
     - #stage: Build docker image
       name: Docker build
+      workspaces:
+        use: build_cache
       script: 
-        - chmod +x script/read_buildinfo.sh;bash script/read_buildinfo.sh
         - source variable.sh
         - echo "BUILD_DOCKER - $BUILD_DOCKER"
         - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/build_docker.sh; bash -x script/build_docker.sh; fi
 
     - stage: Run Scanner
       name: Run trivy scan
+      workspaces:
+        use: build_cache
       script:
         - echo "This is trivy scan"
+        - pwd; ls -ltr
     - name: Run syft scan
+      workspaces:
+        use: build_cache
       script:
         - echo "This is syft scan"
     - name: Run clair scan
+      workspaces:
+        use: build_cache
       script: 
         - echo "This is clair scan"
