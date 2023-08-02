@@ -14,8 +14,8 @@ python3 script/validate_builds.py "$PKG_DIR_PATH/$BUILD_SCRIPT" "$VERSION" &
 SCRIPT_PID=$!
 while ps -p $SCRIPT_PID > /dev/null
 do 
-  echo "$SCRIPT_PID is running"
-  sleep 300
+  echo "$SCRIPT_PID is running.. Please wait"
+  sleep 30
 done
 wait $SCRIPT_PID
 my_pid_status=$?

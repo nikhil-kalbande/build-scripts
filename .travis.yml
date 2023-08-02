@@ -55,6 +55,7 @@ jobs:
         - docker images
         - source variable.sh
         - echo "BUILD_DOCKER - $BUILD_DOCKER"
+        - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/build_docker.sh; bash -x script/build_docker.sh; fi
         - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/trivy_scan.sh; bash -x script/trivy_scan.sh; fi
     - name: Syft scan
       workspaces:
@@ -63,6 +64,7 @@ jobs:
         - echo "This is syft scan"
         - source variable.sh
         - echo "BUILD_DOCKER - $BUILD_DOCKER"
+        - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/build_docker.sh; bash -x script/build_docker.sh; fi
         - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/syft_scan.sh; bash -x script/syft_scan.sh; fi 
     - name: Clair scan
       workspaces:
@@ -71,6 +73,7 @@ jobs:
         - echo "This is clair scan"
         - source variable.sh
         - echo "BUILD_DOCKER - $BUILD_DOCKER"
+        - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/build_docker.sh; bash -x script/build_docker.sh; fi
         - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/clair_scan.sh; bash -x script/clair_scan.sh; fi
         
     - name: Grype scan
@@ -80,4 +83,5 @@ jobs:
         - echo "This is Grype scan"
         - source variable.sh
         - echo "BUILD_DOCKER - $BUILD_DOCKER"
+        - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/build_docker.sh; bash -x script/build_docker.sh; fi
         - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/grype_scan.sh; bash -x script/grype_scan.sh; fi
