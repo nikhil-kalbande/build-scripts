@@ -46,19 +46,38 @@ jobs:
         - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/build_docker.sh; bash -x script/build_docker.sh; fi
 
     - stage: Run Scanner
-      name: Run trivy scan
+      name: Trivy scan
       workspaces:
         use: build_cache
       script:
         - echo "This is trivy scan"
         - pwd; ls -ltr
-    - name: Run syft scan
+        - docker images
+        - source variable.sh
+        - echo "BUILD_DOCKER - $BUILD_DOCKER"
+        - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/trivy_scan.sh; bash -x script/trivy_scan.sh; fi
+    - name: Syft scan
       workspaces:
         use: build_cache
       script:
         - echo "This is syft scan"
-    - name: Run clair scan
+        - source variable.sh
+        - echo "BUILD_DOCKER - $BUILD_DOCKER"
+        - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/syft_scan.sh; bash -x script/syft_scan.sh; fi 
+    - name: Clair scan
       workspaces:
         use: build_cache
       script: 
         - echo "This is clair scan"
+        - source variable.sh
+        - echo "BUILD_DOCKER - $BUILD_DOCKER"
+        - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/clair_scan.sh; bash -x script/clair_scan.sh; fi
+        
+    - name: Grype scan
+      workspaces:
+        use: build_cache
+      script: 
+        - echo "This is Grype scan"
+        - source variable.sh
+        - echo "BUILD_DOCKER - $BUILD_DOCKER"
+        - if [ ${BUILD_DOCKER} == true ]; then chmod +x script/grype_scan.sh; bash -x script/grype_scan.sh; fi
