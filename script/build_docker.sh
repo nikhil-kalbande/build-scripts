@@ -1,16 +1,14 @@
  #!/bin/bash -xe
-echo "Sourcing variables to get values of build_info.json" 
-source variable.sh
 
 version="$VERSION"
 packageDirPath="$PKG_DIR_PATH"
 configFile="build_info.json"
 imageName=$IMAGE_NAME
-buildDocker=true
+buildDocker=$BUILD_DOCKER
+
 
 cd $packageDirPath
-echo "Checking for docker_build value in build_info.json"
-buildDocker=$(jq .docker_build $configFile)
+
 if [ $buildDocker != false ];then
     if [[ $(jq --arg ver $version '.[$ver]' $configFile) != null ]]; then
         dockerBuildDir=$(jq -r --arg ver $version '.[$ver].dir' $configFile)
@@ -47,6 +45,7 @@ if [ $buildDocker != false ];then
     #docker rmi -f ${baseName}
     echo "Building docker image"
     sudo docker build $buildArgs -t $imageName $dockerBuildDir
+    docker save -o "$HOME/build/$TRAVIS_REPO_SLUG/image.tar" $IMAGE_NAME
 else
     echo "Docker image is not supported"
 fi
