@@ -17,7 +17,7 @@ services:
 
 before_install:
     - sudo apt install -y jq; jq --version
-
+    - curl -fL https://getcli.jfrog.io | sh
 jobs:
   include:
     - stage: Build info
