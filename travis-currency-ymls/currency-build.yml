@@ -57,6 +57,7 @@ jobs:
 
     - stage: Run Scanner
       name: Run trivy scan
+      if: env(ENABLE_TRIVY) = true
       workspaces:
         use: 
           - build_cache
@@ -66,6 +67,7 @@ jobs:
         - if [ ${BUILD_DOCKER} == true ]; then docker load -i "$HOME/build/$TRAVIS_REPO_SLUG/image.tar"; chmod +x ./script/trivy_scan.sh;bash ./script/trivy_scan.sh; fi
         
     - name: Run syft scan
+      if: env(ENABLE_SYFT) = true
       workspaces:
         use: 
           - build_cache
@@ -75,6 +77,7 @@ jobs:
         - if [ ${BUILD_DOCKER} == true ]; then docker load -i "$HOME/build/$TRAVIS_REPO_SLUG/image.tar"; chmod +x ./script/syft_scan.sh;bash ./script/syft_scan.sh; fi
 
     - name: Run grype scan
+      if: env(ENABLE_GRYPE) = true
       workspaces:
         use: 
           - build_cache

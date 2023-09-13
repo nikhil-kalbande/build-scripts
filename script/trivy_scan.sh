@@ -5,6 +5,8 @@ package_dirpath="$PKG_DIR_PATH"
 config_file="build_info.json"
 image_name=$IMAGE_NAME
 build_docker=$BUILD_DOCKER
+validate_build_script=$VALIDATE_BUILD_SCRIPT
+languages=$LANGUAGES
 
 cd $package_dirpath
 
@@ -42,5 +44,11 @@ if [ $build_docker == true ];then
   	ls -ltr | grep "vulner"
 	#curl -s -k -u ${env.dockerHubUser}:${env.dockerHubPassword} --upload-file vulnerabilities_summary.txt ${url_prefix}/Trivy_vulnerability_summary.txt
  fi
+ 
+if [ $validate_build_script == true ];then
 
+
+
+
+fi
 
