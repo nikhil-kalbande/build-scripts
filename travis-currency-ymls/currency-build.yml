@@ -5,8 +5,7 @@ language: shell
 
 branches:
   only:
-  - travis-currency-poc
-  - travis-currency-poc-2
+  - test_travis_poc
 
 env:
   global:
