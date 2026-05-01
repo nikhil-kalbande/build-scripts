@@ -1,18 +1,13 @@
-# Security Policy
+## Security Policy
 
-## Supported Versions
+### Supported Versions
+We provide build scripts for many (thousands) of open source projects, often covering multiple versions per project.
 
-We currently provide build scripts for many (thousands) of open source projects and within those projects many different versions.
+Failures related to the upstream projects or their source code should be assessed and reported directly to the corresponding open source community. We do not have the bandwidth to triage, track, or maintain context for issues that originate outside of our build scripts.
 
-Any failures within the packages that we create build scripts for should be assessed and filed with the corresponding open source project - 
-we do not have the bandwidth to carry additional issues back to those communities or maintain the context behind those failures.
+An Open Source Edge (OSE) portal is available at https://open-source-edge.developerfirst.ibm.com/. Please review the portal to identify version-specific SBOMs, licenses, and CVEs for a limited set of packages that are onboarded to the Manage Currency set.
 
-We have a Open Source Edge portal up at https://open-source-edge.developerfirst.ibm.com/ , so request to check on it which will help to identify per-version SBOM, Licenses and CVEs for limited set of packages onboarded to Manage Currency set on OSE portal.
+If you identify a security issue introduced by our build process, please file an issue directly in this GitHub repository. If the vulnerability is publicly disclosed, ensure that the issue is reported against the specific build script directory where the issue exists.
 
-If you see a security issue introduced by the way we build a product, please directly file an issue in this GtiHb repo with that vulunerability (if it is publicly disclosed) against the specific build script directory that contains the issue.  
-
-## Reporting a Vulnerability
-
-If the vulnerability is reported via a github issue, we will try to get it assigned and looked at as quickly as possible.  Given
-our agile process model, we look at issues like this typically at the beginning of any two week sprint so you should have some sort of
-response within 4 weeks.  
+### Reporting a Vulnerability
+If a vulnerability is reported via a GitHub issue, we will make a best-effort attempt to triage and assign it as quickly as possible. Given our agile development model, such issues are typically reviewed at the start of a two-week sprint. You should expect an initial response within approximately four weeks.
